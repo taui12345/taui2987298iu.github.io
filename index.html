@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Melody Premium - ร้านค้าและคอมมูนิตี้คนรักเสียงเพลง</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Prompt -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Prompt', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            dark: '#0a0b10',
+                            card: '#121420',
+                            primary: '#ec4899',
+                            secondary: '#8b5cf6',
+                            accent: '#06b6d4',
+                            kbank: '#138f2e'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            background-color: #06070a;
+            color: #f3f4f6;
+            overflow-x: hidden;
+        }
+        .neon-glow-pink {
+            box-shadow: 0 0 20px rgba(236, 72, 153, 0.45);
+        }
+        .neon-glow-purple {
+            box-shadow: 0 0 20px rgba(139, 92, 246, 0.45);
+        }
+        .neon-glow-accent {
+            box-shadow: 0 0 20px rgba(6, 182, 212, 0.45);
+        }
+        .text-neon-glow {
+            text-shadow: 0 0 10px rgba(236, 72, 153, 0.6);
+        }
+        .glass-panel {
+            background: rgba(18, 20, 32, 0.7);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0a0b10;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #25283a;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #ec4899;
+        }
+        @keyframes spin-slow {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        .animate-spin-slow {
+            animation: spin-slow 3s linear infinite;
+        }
+    </style>
+</head>
+<body class="font-sans min-h-screen flex flex-col">
+
+    <!-- NAVBAR -->
+    <header class="glass-panel fixed top-0 left-0 w-full z-40 transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+            <div class="flex items-center space-x-3 cursor-pointer" onclick="changeTab('home')">
+                <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-pink-500 via-purple-500 to-cyan-400 flex items-center justify-center shadow-lg transform hover:rotate-12 transition-all duration-300">
+                    <i class="fa-solid fa-compact-disc text-xl text-white animate-spin-slow"></i>
+                </div>
+                <div>
+                    <span class="text-2xl font-black tracking-wider bg-gradient-to-r from-pink-500 via-purple-500 to-cyan-400 bg-clip-text text-transparent">MELODY</span>
+                    <span class="text-xs block text-slate-400 font-medium tracking-widest uppercase">Premium Beat Shop</span>
+                </div>
+            </div>
+
+            <!-- CENTER MENU -->
+            <nav class="hidden md:flex space-x-8 text-sm font-medium">
+                <button onclick="changeTab('home')" class="nav-btn text-pink-500 hover:text-white transition duration-200" id="nav-home">หน้าแรก</button>
+                <button onclick="changeTab('shop')" class="nav-btn text-slate-300 hover:text-pink-500 transition duration-200" id="nav-shop">เลือกซื้อเพลง</button>
+                <button onclick="openVipModal()" class="nav-btn text-yellow-400 hover:text-yellow-300 font-bold transition duration-200 flex items-center space-x-1">
+                    <i class="fa-solid fa-crown"></i>
+                    <span>สมัครสมาชิก VIP</span>
+                </button>
+            </nav>
+
+            <!-- RIGHT MENU -->
+            <div class="flex items-center space-x-4">
+                <button onclick="openCartModal()" class="relative p-2.5 rounded-xl bg-slate-900 border border-slate-800 hover:border-pink-500 text-slate-300 hover:text-white transition duration-200">
+                    <i class="fa-solid fa-shopping-bag text-lg"></i>
+                    <span id="cart-badge" class="absolute -top-1.5 -right-1.5 w-5 h-5 bg-pink-500 text-white text-[10px] font-bold rounded-full flex items-center justify-center animate-bounce hidden">0</span>
+                </button>
+
+                <button onclick="openVipModal()" class="hidden sm:flex items-center space-x-2 px-4 py-2 rounded-xl bg-gradient-to-r from-yellow-500 to-amber-600 text-black font-extrabold text-sm hover:from-yellow-400 hover:to-amber-500 transition shadow-lg shadow-yellow-500/20 transform hover:-translate-y-0.5">
+                    <i class="fa-solid fa-gem text-xs"></i>
+                    <span>สมัคร VIP</span>
+                </button>
+
+                <div id="user-vip-badge" class="hidden items-center space-x-2 px-3 py-1.5 rounded-xl bg-slate-900 border border-yellow-500/30 text-yellow-400 text-xs font-bold">
+                    <i class="fa-solid fa-crown text-xs"></i>
+                    <span>คุณเป็น VIP แล้ว</span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- BACKGROUND ANIMATION -->
+    <div class="absolute top-0 left-0 w-full h-screen overflow-hidden pointer-events-none z-0">
+        <div class="absolute top-[-20%] left-[-10%] w-[50%] h-[50%] rounded-full bg-pink-600/10 blur-[120px]"></div>
+        <div class="absolute bottom-[20%] right-[-10%] w-[45%] h-[45%] rounded-full bg-cyan-600/10 blur-[120px]"></div>
+        <div class="absolute top-[40%] left-[30%] w-[35%] h-[35%] rounded-full bg-purple-600/10 blur-[120px]"></div>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <main class="flex-grow pt-28 pb-32 z-10">
+        
+        <!-- HOME SECTION -->
+        <section id="section-home" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-16">
+            
+            <!-- HERO BANNER -->
+            <div class="relative rounded-3xl overflow-hidden bg-gradient-to-br from-brand-card via-brand-dark to-slate-900 border border-slate-800 p-8 sm:p-12 lg:p-16 shadow-2xl">
+                <div class="absolute top-0 right-0 w-96 h-96 bg-gradient-to-br from-pink-500/20 to-purple-600/20 rounded-full blur-3xl pointer-events-none"></div>
+                
+                <div class="max-w-2xl space-y-6 relative z-10">
+                    <span class="inline-flex items-center space-x-2 px-3.5 py-1.5 rounded-full bg-pink-500/10 border border-pink-500/30 text-pink-400 text-xs font-bold uppercase tracking-widest">
+                        <span class="w-2 h-2 rounded-full bg-pink-400 animate-ping"></span>
+                        <span>มาใหม่ประจำเดือนนี้</span>
+                    </span>
+                    <h1 class="text-4xl sm:text-5xl lg:text-6xl font-black leading-tight tracking-tight text-white">
+                        สัมผัสบีทและเพลง <br>
+                        <span class="bg-gradient-to-r from-pink-500 via-purple-500 to-cyan-400 bg-clip-text text-transparent">ระดับเวิลด์คลาส</span> ที่ใช่สำหรับคุณ
+                    </h1>
+                    <p class="text-slate-400 text-base sm:text-lg leading-relaxed">
+                        ยินดีต้อนรับสู่แหล่งจำหน่ายลิขสิทธิ์เพลงและบีทคุณภาพสูง ซื้อไปใช้ในสตรีม ทำวิดีโอ หรือเพื่อสุนทรียภาพส่วนตัว สมัครสมาชิกระดับ VIP วันนี้ เพื่อรับสิทธิ์ดาวน์โหลดทุกเพลงในร้านแบบไม่จำกัด!
+                    </p>
+                    
+                    <div class="flex flex-col sm:flex-row items-stretch sm:items-center space-y-4 sm:space-y-0 sm:space-x-4 pt-4">
+                        <button onclick="changeTab('shop')" class="px-8 py-4 rounded-2xl bg-gradient-to-r from-pink-500 via-purple-500 to-cyan-500 text-white font-bold text-center shadow-lg hover:shadow-pink-500/20 transform hover:-translate-y-0.5 transition-all duration-300">
+                            <i class="fa-solid fa-music mr-2"></i>เลือกช้อปเลย
+                        </button>
+                        <button onclick="openVipModal()" class="px-8 py-4 rounded-2xl bg-slate-900 border border-slate-700 hover:border-yellow-400 text-yellow-400 font-bold text-center hover:bg-slate-800/80 transition duration-300 flex items-center justify-center space-x-2">
+                            <i class="fa-solid fa-crown text-yellow-400"></i>
+                            <span>สมัคร VIP ปลดล็อก</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- FEATURED BEATS -->
+            <div class="space-y-6">
+                <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+                    <div>
+                        <h2 class="text-2xl sm:text-3xl font-black tracking-tight text-white flex items-center space-x-2">
+                            <i class="fa-solid fa-fire text-pink-500"></i>
+                            <span>เพลงแนะนำสุดฮิต</span>
+                        </h2>
+                        <p class="text-slate-400 text-sm">เพลงลิขสิทธิ์ยอดฮิต ทดลองฟังแบบเรียลไทม์ได้แล้วที่นี่</p>
+                    </div>
+                </div>
+                <div id="featured-beats" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+            </div>
+        </section>
+
+        <!-- SHOP SECTION -->
+        <section id="section-shop" class="hidden max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
+            <div class="space-y-6">
+                <h2 class="text-3xl font-black text-white">เลือกซื้อเพลง</h2>
+                
+                <!-- SEARCH & FILTER -->
+                <div class="flex flex-col gap-4">
+                    <input type="text" id="search-input" placeholder="ค้นหาเพลง หรือ ศิลปิน..." class="px-6 py-3 rounded-2xl bg-slate-900 border border-slate-800 text-white placeholder-slate-500 focus:outline-none focus:border-pink-500 transition">
+                    
+                    <div class="flex gap-2 overflow-x-auto pb-2">
+                        <button data-category="all" class="filter-btn px-4 py-2 rounded-lg font-bold whitespace-nowrap bg-pink-500 text-white transition" onclick="filterCategory('all')">ทั้งหมด</button>
+                        <button data-category="trap" class="filter-btn px-4 py-2 rounded-lg font-bold whitespace-nowrap bg-slate-900 border border-slate-800 text-slate-300 hover:border-pink-500 transition" onclick="filterCategory('trap')">Trap</button>
+                        <button data-category="lofi" class="filter-btn px-4 py-2 rounded-lg font-bold whitespace-nowrap bg-slate-900 border border-slate-800 text-slate-300 hover:border-pink-500 transition" onclick="filterCategory('lofi')">Lo-Fi</button>
+                        <button data-category="hip-hop" class="filter-btn px-4 py-2 rounded-lg font-bold whitespace-nowrap bg-slate-900 border border-slate-800 text-slate-300 hover:border-pink-500 transition" onclick="filterCategory('hip-hop')">Hip-Hop</button>
+                        <button data-category="chill" class="filter-btn px-4 py-2 rounded-lg font-bold whitespace-nowrap bg-slate-900 border border-slate-800 text-slate-300 hover:border-pink-500 transition" onclick="filterCategory('chill')">Chill</button>
+                    </div>
+                </div>
+
+                <!-- BEATS GRID -->
+                <div id="beats-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6"></div>
+            </div>
+        </section>
+    </main>
+
+    <!-- ======= MODALS ======= -->
+
+    <!-- CART MODAL -->
+    <div id="cart-modal" class="hidden fixed inset-0 bg-black/80 z-50 flex items-center justify-center p-4 backdrop-blur">
+        <div class="glass-panel w-full max-w-2xl rounded-3xl p-8 space-y-6">
+            <div class="flex items-center justify-between">
+                <h2 class="text-2xl font-black text-white flex items-center space-x-2">
+                    <i class="fa-solid fa-shopping-bag text-pink-500"></i>
+                    <span>ตะกร้าสินค้า</span>
+                </h2>
+                <button onclick="closeCartModal()" class="text-slate-400 hover:text-white transition text-2xl">×</button>
+            </div>
+
+            <div id="cart-items" class="space-y-3 max-h-96 overflow-y-auto"></div>
+
+            <div id="vip-discount-info" class="hidden p-4 rounded-xl bg-green-500/10 border border-green-500/30 text-green-400 text-sm flex items-center space-x-2">
+                <i class="fa-solid fa-check-circle"></i>
+                <span>✨ ส่วนลด VIP 50% ถูกใช้งานแล้ว!</span>
+            </div>
+
+            <div class="flex items-center justify-between p-4 rounded-xl bg-slate-900 border border-slate-800">
+                <span class="text-white font-bold">รวมทั้งสิ้น:</span>
+                <span id="cart-total" class="text-2xl font-black text-pink-400">฿0</span>
+            </div>
+
+            <button id="checkout-btn" onclick="openCheckoutModal()" class="w-full px-6 py-4 rounded-2xl bg-gradient-to-r from-pink-500 to-purple-600 text-white font-bold hover:shadow-lg transition">
+                <i class="fa-solid fa-credit-card mr-2"></i>ดำเนินการชำระเงิน
+            </button>
+        </div>
+    </div>
+
+    <!-- CHECKOUT MODAL -->
+    <div id="checkout-modal" class="hidden fixed inset-0 bg-black/80 z-50 flex items-center justify-center p-4 backdrop-blur">
+        <div class="glass-panel w-full max-w-2xl rounded-3xl p-8 space-y-6">
+            <h2 class="text-2xl font-black text-white">เลือกวิธีการชำระเงิน</h2>
+
+            <div class="grid grid-cols-2 gap-4">
+                <button data-method="kbank" onclick="selectPaymentMethod('kbank')" class="payment-option p-6 rounded-2xl bg-slate-900 border border-slate-800 hover:border-brand-kbank transition cursor-pointer">
+                    <i class="fa-brands fa-cc-visa text-3xl text-brand-kbank mb-2"></i>
+                    <p class="text-white font-bold">K-Bank</p>
+                    <p class="text-slate-400 text-xs">ธนาคารกสิกรไทย</p>
+                </button>
+                <button data-method="promptpay" onclick="selectPaymentMethod('promptpay')" class="payment-option p-6 rounded-2xl bg-slate-900 border border-slate-800 hover:border-blue-500 transition cursor-pointer">
+                    <i class="fa-solid fa-qrcode text-3xl text-blue-400 mb-2"></i>
+                    <p class="text-white font-bold">PromptPay</p>
+                    <p class="text-slate-400 text-xs">สแกน QR Code</p>
+                </button>
+            </div>
+
+            <button id="payment-confirm-btn" disabled onclick="completePayment()" class="w-full px-6 py-4 rounded-2xl bg-gradient-to-r from-pink-500 to-purple-600 text-white font-bold hover:shadow-lg transition disabled:opacity-50 disabled:cursor-not-allowed">
+                <i class="fa-solid fa-check mr-2"></i>ยืนยันการชำระเงิน
+            </button>
+
+            <button onclick="closeCheckoutModal()" class="w-full px-6 py-3 rounded-2xl bg-slate-900 border border-slate-800 text-slate-300 font-bold hover:border-slate-700 transition">
+                ยกเลิก
+            </button>
+        </div>
+    </div>
+
+    <!-- VIP MODAL -->
+    <div id="vip-modal" class="hidden fixed inset-0 bg-black/80 z-50 flex items-center justify-center p-4 backdrop-blur">
+        <div class="glass-panel w-full max-w-2xl rounded-3xl p-8 space-y-6">
+            <div class="flex items-center justify-between">
+                <h2 class="text-2xl font-black text-yellow-400 flex items-center space-x-2">
+                    <i class="fa-solid fa-crown"></i>
+                    <span>สมาชิก VIP</span>
+                </h2>
+                <button onclick="closeVipModal()" class="text-slate-400 hover:text-white transition text-2xl">×</button>
+            </div>
+
+            <div class="space-y-4">
+                <div class="p-4 rounded-2xl bg-gradient-to-br from-yellow-500/10 to-amber-500/10 border border-yellow-500/30 space-y-3">
+                    <h3 class="text-white font-bold text-lg">สิทธิ์พิเศษของสมาชิก VIP:</h3>
+                    <ul class="space-y-2 text-slate-300 text-sm">
+                        <li class="flex items-center space-x-2"><i class="fa-solid fa-check text-yellow-400"></i><span>ส่วนลด 50% ทุกเพลง</span></li>
+                        <li class="flex items-center space-x-2"><i class="fa-solid fa-check text-yellow-400"></i><span>ดาวน์โหลดไม่จำกัด</span></li>
+                        <li class="flex items-center space-x-2"><i class="fa-solid fa-check text-yellow-400"></i><span>เข้าถึงเพลงใหม่ก่อนใคร</span></li>
+                        <li class="flex items-center space-x-2"><i class="fa-solid fa-check text-yellow-400"></i><span>ไม่มีโฆษณา</span></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 gap-4">
+                <button onclick="selectVipPackage('1 เดือน', 99)" class="p-4 rounded-2xl bg-slate-900 border-2 border-slate-800 hover:border-yellow-400 transition text-left">
+                    <p class="text-white font-bold">สมาชิก 1 เดือน</p>
+                    <p class="text-yellow-400 text-lg font-black">฿99</p>
+                </button>
+                <button onclick="selectVipPackage('3 เดือน', 249)" class="p-4 rounded-2xl bg-slate-900 border-2 border-slate-800 hover:border-yellow-400 transition text-left">
+                    <p class="text-white font-bold">สมาชิก 3 เดือน <span class="text-xs bg-pink-500 text-white px-2 py-1 rounded">ประหยัด 20%</span></p>
+                    <p class="text-yellow-400 text-lg font-black">฿249</p>
+                </button>
+                <button onclick="selectVipPackage('1 ปี', 899)" class="p-4 rounded-2xl bg-gradient-to-r from-yellow-500/20 to-amber-500/20 border-2 border-yellow-400 hover:border-yellow-300 transition text-left">
+                    <p class="text-white font-bold">สมาชิก 1 ปี <span class="text-xs bg-green-500 text-white px-2 py-1 rounded">ประหยัด 40%</span></p>
+                    <p class="text-yellow-400 text-lg font-black">฿899</p>
+                </button>
+            </div>
+
+            <button id="vip-checkout-btn" disabled onclick="proceedVipCheckout()" class="w-full px-6 py-4 rounded-2xl bg-gradient-to-r from-yellow-500 to-amber-600 text-black font-bold hover:shadow-lg transition disabled:opacity-50 disabled:cursor-not-allowed">
+                <i class="fa-solid fa-crown mr-2"></i>ดำเนินการต่อ
+            </button>
+
+            <button onclick="closeVipModal()" class="w-full px-6 py-3 rounded-2xl bg-slate-900 border border-slate-800 text-slate-300 font-bold hover:border-slate-700 transition">
+                ยกเลิก
+            </button>
+        </div>
+    </div>
+
+    <!-- SUCCESS MODAL -->
+    <div id="success-modal" class="hidden fixed inset-0 bg-black/80 z-50 flex items-center justify-center p-4 backdrop-blur">
+        <div class="glass-panel w-full max-w-md rounded-3xl p-8 space-y-6 text-center">
+            <div class="text-6xl">✨</div>
+            <h2 id="success-title" class="text-2xl font-black text-white"></h2>
+            <p id="success-message" class="text-slate-400"></p>
+            <button onclick="closeSuccessModal()" class="w-full px-6 py-4 rounded-2xl bg-gradient-to-r from-pink-500 to-purple-600 text-white font-bold hover:shadow-lg transition">
+                ปิด
+            </button>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
